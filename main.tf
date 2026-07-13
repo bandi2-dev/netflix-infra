@@ -20,8 +20,23 @@ module "network" {
 }
 
 module "artifact_registry" {
-
   source = "./modules/artifact-registry"
+
+  project_id = var.project_id
+  region = var.region
+  environment = var.environment
+}
+
+module "service_account" {
+  source = "./modules/service-account"
+
+  project_id = var.project_id
+  environment = var.environment
+}
+
+module "gke" {
+
+  source = "./modules/gke"
 
   project_id = var.project_id
 
@@ -29,14 +44,10 @@ module "artifact_registry" {
 
   environment = var.environment
 
-}
+  network = module.network.network_name
 
-module "service_account" {
+  subnetwork = module.network.subnet_name
 
-  source = "./modules/service-account"
-
-  project_id = var.project_id
-
-  environment = var.environment
+  service_account = module.service_account.email
 
 }

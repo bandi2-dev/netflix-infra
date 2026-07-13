@@ -1,23 +1,78 @@
-# Netflix Platform Infrastructure
+# Netflix Platform - Infrastructure
 
-Infrastructure as Code for the Netflix DevOps Platform.
+## Overview
 
-## Tech Stack
+This repository provisions the cloud infrastructure for the Netflix Platform on Google Cloud Platform using Terraform.
 
-- Google Cloud Platform
+The goal is to simulate a production-style DevOps environment with Infrastructure as Code, Kubernetes, CI/CD, and Gateway API.
+
+---
+
+## Technology Stack
+
 - Terraform
-- Google Kubernetes Engine
+- Google Cloud Platform
+- Google Kubernetes Engine (GKE)
 - Artifact Registry
-- Gateway API
-- Jenkins
-- SonarQube
-- Docker
-- Kubernetes
+- Cloud NAT
+- Cloud Router
+- IAM
+- Service Accounts
 
-## Architecture
+---
 
-Coming Soon
+## Repository Structure
 
-## Deployment
+```
+modules/
+├── apis
+├── network
+├── artifact-registry
+├── service-account
+└── gke
+```
 
-Coming Soonn
+---
+
+## Infrastructure Components
+
+- Google Cloud API Enablement
+- VPC
+- Private Subnet
+- Secondary IP Ranges
+- Firewall Rules
+- Cloud Router
+- Cloud NAT
+- Artifact Registry
+- Dedicated GKE Service Account
+- IAM Roles
+- Standard GKE Cluster
+
+---
+
+## Deployment Order
+
+1. Enable Google APIs
+2. Create Network
+3. Configure Router and NAT
+4. Create Artifact Registry
+5. Create Service Account
+6. Provision GKE Cluster
+
+---
+
+## Current Status
+
+- [x] APIs
+- [x] Network
+- [x] Firewall
+- [x] Cloud NAT
+- [x] Artifact Registry
+- [x] Service Account
+- [ ] GKE (In Progress)
+
+---
+
+## Next Repository
+
+After infrastructure provisioning, Kubernetes manifests, Gateway API configuration, and CI/CD pipelines will be maintained in the `netflix-deployment` repository.
