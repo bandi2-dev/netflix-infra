@@ -7,10 +7,10 @@ resource "google_container_cluster" "gke" {
   network    = var.network
   subnetwork = var.subnetwork
 
+  deletion_protection = false
+
   remove_default_node_pool = true
   initial_node_count       = 1
-
-  deletion_protection = true
 
   networking_mode = "VPC_NATIVE"
 
@@ -27,26 +27,6 @@ resource "google_container_cluster" "gke" {
     services_secondary_range_name = "gke-services"
   }
 
-  workload_identity_config {
-    workload_pool = "${var.project_id}.svc.id.goog"
-  }
-
-  addons_config {
-
-    http_load_balancing {
-      disabled = false
-    }
-
-    horizontal_pod_autoscaling {
-      disabled = false
-    }
-
-  }
-
-  network_policy {
-    enabled = true
-  }
-
   logging_service    = "logging.googleapis.com/kubernetes"
   monitoring_service = "monitoring.googleapis.com/kubernetes"
 
@@ -54,24 +34,20 @@ resource "google_container_cluster" "gke" {
 
 resource "google_container_node_pool" "primary" {
 
-  name     = "primary-node-pool"
-  cluster  = google_container_cluster.gke.name
-  location = var.region
+  name     = "primary-pool"
   project  = var.project_id
+  location = var.region
+  cluster  = google_container_cluster.gke.name
 
   node_count = 1
-
-  autoscaling {
-
-    min_node_count = 1
-
-    max_node_count = 2
-
-  }
 
   node_config {
 
     machine_type = "e2-medium"
+
+    disk_type = "pd-standard"
+
+    disk_size_gb = 20
 
     service_account = var.service_account
 
@@ -83,18 +59,11 @@ resource "google_container_node_pool" "primary" {
       environment = var.environment
     }
 
-    disk_size_gb = 50
-
-    disk_type = "pd-balanced"
-
   }
 
   management {
-
-    auto_repair = true
-
+    auto_repair  = true
     auto_upgrade = true
-
   }
 
 }
