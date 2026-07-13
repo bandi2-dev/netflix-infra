@@ -30,3 +30,13 @@ module "artifact_registry" {
   environment = var.environment
 
 }
+
+module "service_account" {
+
+  source = "./modules/service-account"
+
+  project_id = var.project_id
+
+  environment = var.environment
+
+}
