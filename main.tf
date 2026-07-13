@@ -7,14 +7,26 @@ module "apis" {
 module "network" {
   source = "./modules/network"
 
-  project_id  = var.project_id
-  region       = var.region
-  environment  = var.environment
+  project_id = var.project_id
+  region = var.region
+  environment = var.environment
 
   network_name = local.network_name
-  subnet_name  = local.subnet_name
+  subnet_name = local.subnet_name
 
-  subnet_cidr   = "10.10.0.0/24"
-  pods_cidr     = "10.20.0.0/16"
+  subnet_cidr = "10.10.0.0/24"
+  pods_cidr = "10.20.0.0/16"
   services_cidr = "10.30.0.0/20"
+}
+
+module "artifact_registry" {
+
+  source = "./modules/artifact-registry"
+
+  project_id = var.project_id
+
+  region = var.region
+
+  environment = var.environment
+
 }
