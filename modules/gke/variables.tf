@@ -21,3 +21,7 @@ variable "subnetwork" {
 variable "service_account" {
   type = string
 }
+
+variable "zone" {
+  type = string
+}

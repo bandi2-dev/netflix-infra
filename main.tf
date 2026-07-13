@@ -42,6 +42,8 @@ module "gke" {
 
   region = var.region
 
+  zone = var.zone
+
   environment = var.environment
 
   network = module.network.network_name
